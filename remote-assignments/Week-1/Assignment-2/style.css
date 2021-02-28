@@ -1,0 +1,54 @@
+body{margin:0px;}
+/* nav樣式設定 */
+nav{
+  display:flex;
+}
+nav>.logo{
+  flex:auto;
+  background-color:#F0F0F0;
+  align-items:left;
+  padding:10px;
+}
+nav>.menu{
+  flex:none;
+  background-color:#F0F0F0;
+  align-items:right;
+  padding:10px;
+}
+
+.welcome{
+  background-color:#b0c4de;cfont-weight:bold;font-size:30px;
+  text-align:center;padding:60px;
+}
+
+.section{
+  text-align:center;
+}
+
+/* main 樣式設定 */
+content{
+  display:flex;flex-wrap:wrap;
+  justify-content:center;
+  align-items:stretch;
+  width:1200px;margin-left:auto;margin-right:auto;
+}
+content>.box{ /* 項目 */
+  flex:none;
+  width:580px;margin:10px;background-color:#778899;
+  diplay:inline-block;vertical-align:top;
+  text-align:center;height:180px;line-height:30px;
+}
+
+aside{
+  display:flex;
+  justify-content:center;
+  width:1200px;margin-left:auto;margin-right:auto;
+}
+
+aside>.function{
+  width:150px;margin:3px;background-color:#b0c4de;
+  display:inline-block;
+  text-align:center;line-height:3;
+
+
+}

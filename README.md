@@ -7,7 +7,7 @@
   	git branch -M main  
   	git remote add origin git@github.com:junhong1923/junhong1923.github.io.git  
   	git push -u origin main  
-  ## or push an existing repo. from the command line  
+  ## or push an existing repo. from the command line:  
   	git remote add origin git@github.com:junhong1923/junhong1923.github.io.git  
   	git branch -M main  
   	git push -u origin main  
