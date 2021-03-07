@@ -33,7 +33,7 @@ content{
   width:1200px;margin-left:auto;margin-right:auto;
 }
 content>.box{ /* 項目 */
-  flex:none;
+  /* flex:none; */
   width:580px;margin:10px;background-color:#778899;
   diplay:inline-block;vertical-align:top;
   text-align:center;height:180px;line-height:30px;
@@ -41,14 +41,23 @@ content>.box{ /* 項目 */
 
 aside{
   display:flex;
+  flex-wrap:wrap;
   justify-content:center;
   width:1200px;margin-left:auto;margin-right:auto;
 }
 
-aside>.function{
+aside>.action{
   width:150px;margin:3px;background-color:#b0c4de;
-  display:inline-block;
   text-align:center;line-height:3;
+  border: none;
+}
 
+aside content {
+  display: none;
+}
 
+content>.hiddenBox{
+  width:580px;margin:10px;background-color:#778899;
+  vertical-align:top;
+  text-align:center;height:180px;line-height:30px;
 }
