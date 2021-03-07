@@ -1,8 +1,8 @@
 function max(numbers) {
-  let max = numbers[0];
-  for (let i=0; i<numbers.length-1; i++) {
-    if (numbers[i+1] > max) { // index might out of range if the max is the last element of array
-      max = numbers[i+1];
+  let max = 0.00001;
+  for (let i=0; i<numbers.length; i++) {
+    if (numbers[i] > max) { // notice: index might out of range if the max is the last element of array
+      max = numbers[i];
     }
   }
   return max;
