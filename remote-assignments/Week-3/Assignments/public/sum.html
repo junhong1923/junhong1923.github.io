@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>sum html</title>
+  </head>
+  <body>
+    <h1>Get sum result here</h1>
+    <label id="label">Enter a integer number:</label>
+    <input type="text" id="inputNum">
+    <button id="submit">Submit</button>
+    <div id="showResult"></div>
+
+    <script>
+      const inputNum = document.getElementById('inputNum');
+      const trigger = document.getElementById('submit');
+
+      trigger.addEventListener('click', () => {
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4) {
+            document.getElementById('showResult').innerHTML = `Result of sum: ${xhr.responseText}`;
+          }
+        };
+        xhr.open('GET', `/data?number=${inputNum.value}`);
+        xhr.send();
+      });
+
+    </script>
+
+  </body>
+</html>
