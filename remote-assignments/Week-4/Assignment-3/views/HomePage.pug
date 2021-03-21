@@ -1,0 +1,20 @@
+doctype html 
+html(lanag="en")
+    head
+        title Home Page 
+    body
+        h2 Welcome to Home Page
+        p If you have member account then go for "sign in", else "sign up" an account!
+        form(action='/signed', method='post')
+            label email:
+                input(type='text', name='usermail')
+                br
+            label password:
+                input(type='text', name='userpwd')
+                br
+            button(type='submit', name='sign-up', value='sign-up') Sign up
+            button(type='submit', name='sign-in', value='sign-in') Sign in
+            //- input(type='submit', value='Sign up')
+            //- input(type='submit', value='Sign in')
+            
+            

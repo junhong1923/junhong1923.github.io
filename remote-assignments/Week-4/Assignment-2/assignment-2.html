@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Assignment 2: Callback Function and Advanced HTML DOM</title>
+    </head>
+    <body>
+        <script>
+            function ajax(src, callback){
+                const xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        const data = JSON.parse(xhr.responseText);
+                        callback(data);
+                    }
+                };
+                xhr.open('GET', src);
+                xhr.send();
+            }
+
+            function render(data){
+                let body = document.querySelector('body');
+                let div = document.createElement('div');
+                div.textContent = 'Product information requested by AJAX:';
+                
+                for (let i=0; i<data.length; i++) {
+                    let ul = document.createElement('ul');
+                    ul.innerHTML = `<strong>Product ${i+1}: ${data[i].name}</strong>`;
+                    let li = document.createElement('li');
+                    li.innerHTML = `price: ${data[i].price} <br> description: ${data[i].description}`;
+                    
+                    ul.appendChild(li);
+                    div.appendChild(ul);
+                }
+                body.appendChild(div);
+            }
+
+            ajax("http://13.113.12.180:4000/api/1.0/remote-w4-data", function(response){
+                render(response);
+            }); // you should get product information in JSON format and render data in the page
+        </script>
+    </body>
+</html>
