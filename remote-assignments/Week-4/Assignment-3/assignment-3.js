@@ -2,6 +2,7 @@ const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const e = require('express');
 
 // Create connection
 const db = mysql.createConnection({
@@ -43,37 +44,52 @@ app.get('/createtable', (err, res) => {
 });
 
 app.get('/', (req, res) => {
-    console.log('welcome to page...');
     res.render('HomePage');
 })
 
 app.get('/sign-up', (req, res) => {
-    // let post = {email: req.body.usermail, password: req.body.userpwd};
-    // console.log(`up: ${tempData}`);
-    let sql = 'INSERT INTO user SET ?'
-    // let query = db.query(sql, post, (err, result) => {
-    //     if(err) throw err;
-    //     console.log(result);
-    //     res.send('You are member now...');
-    // })
+    // console.log(req.cookies);
+    let email = req.cookies.userInfo.usermail;
+    let pwd = req.cookies.userInfo.userpwd;
+    if (email != '' && pwd != '') {
+        let sql = `SELECT * FROM assignment.user WHERE email = '${email}' AND password = ${pwd}`;
+        let query = db.query(sql, (err, result) => {
+            if(err) throw err;
+            if (!result.length) { // 代表查不到，需要insert
+                let post = {email:email, password:pwd};
+                let sql = `INSERT INTO user SET ?`;
+                let query = db.query(sql, post, (err, result) => {
+                    if(err) throw(err);
+                    console.log('Register successfully');
+                    res.send('You are member now'); // 等下改成 redirect到member page
+                });
+            } else {
+                res.send('You have already been a member, please sign in');
+            }   
+        });
+    } else {console.log('no userInfo...');} // 使用者可能什麼都沒輸入
 });
 
 app.get('/sign-in', (req, res) => {
-    let email = req.cookies.userEmail;
-    let pwd = req.cookies.userPassword;
-    if (email) { // check if is a member
-        let sql = `SELECT * FROM user WHERE email = ${email} AND password = ${pwd}`;
+    let email = req.cookies.userInfo.usermail;
+    let pwd = req.cookies.userInfo.userpwd;
+    if (email != '' && pwd != '') {
+        let sql = `SELECT * FROM assignment.user WHERE email = '${email}' AND password = ${pwd}`;
         let query = db.query(sql, (err, result) => {
             if(err) throw err;
-            console.log(result);
-        }) 
-        res.render('MemberPage');
-    }
+            if (!result.length) { // 代表查不到，需要insert
+                res.send('You are not a member yet, please register an account');
+            } else {
+                console.log('Sign in successfully');
+                res.render('MemberPage'); // redirect到member page
+            }   
+        });
+    } else {console.log('no userInfo...');} // 使用者可能什麼都沒輸入
 });
 
 app.post('/signed', (req, res) => {
-    console.log(req.body); 
-    res.cookie( 'userEmail',  req.body.usermail, 'userPassword', req.body.userpwd);
+    // console.log(req.body); 
+    res.cookie( 'userInfo', req.body);
 
     // return tempData
     if (req.body['sign-up'] === 'Sign up') {
