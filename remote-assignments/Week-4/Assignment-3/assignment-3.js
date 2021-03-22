@@ -45,7 +45,11 @@ app.get('/createtable', (err, res) => {
 
 app.get('/', (req, res) => {
     res.render('HomePage');
-})
+});
+
+app.get('/MemberPage', (req, res) => {
+    res.render('MemberPage', {message : 'Sign in successfully'});
+});
 
 app.get('/sign-up', (req, res) => {
     // console.log(req.cookies);
@@ -61,10 +65,10 @@ app.get('/sign-up', (req, res) => {
                 let query = db.query(sql, post, (err, result) => {
                     if(err) throw(err);
                     console.log('Register successfully');
-                    res.send('You are member now'); // 等下改成 redirect到member page
+                    res.redirect('/MemberPage');
                 });
             } else {
-                res.send('You have already been a member, please sign in');
+                res.render('HomePage', {message:'You have already been a member, please log in'});
             }   
         });
     } else {console.log('no userInfo...');} // 使用者可能什麼都沒輸入
@@ -77,11 +81,11 @@ app.get('/sign-in', (req, res) => {
         let sql = `SELECT * FROM assignment.user WHERE email = '${email}' AND password = ${pwd}`;
         let query = db.query(sql, (err, result) => {
             if(err) throw err;
-            if (!result.length) { // 代表查不到，需要insert
-                res.send('You are not a member yet, please register an account');
+            if (!result.length) { // 代表查不到，非會員
+                res.render('HomePage', {message : 'Wrong email or password, please try again or register an new account'});
             } else {
                 console.log('Sign in successfully');
-                res.render('MemberPage'); // redirect到member page
+                res.redirect('/MemberPage');
             }   
         });
     } else {console.log('no userInfo...');} // 使用者可能什麼都沒輸入
@@ -91,10 +95,9 @@ app.post('/signed', (req, res) => {
     // console.log(req.body); 
     res.cookie( 'userInfo', req.body);
 
-    // return tempData
-    if (req.body['sign-up'] === 'Sign up') {
+    if (req.body['sign-up'] === 'Register') {
         res.redirect('/sign-up');
-    } else if (req.body['sign-in'] === 'Sign in') {
+    } else if (req.body['sign-in'] === 'Log in') {
         res.redirect('/sign-in');
     }
 });

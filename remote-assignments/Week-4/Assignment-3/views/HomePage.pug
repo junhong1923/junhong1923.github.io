@@ -4,6 +4,7 @@ html(lanag="en")
         title Home Page 
     body
         h2 Welcome to Home Page
+        p #{message}
         p If you have member account then go for "sign in", else "sign up" an account!
         form(action='/signed', method='post')
             label email:
@@ -12,9 +13,7 @@ html(lanag="en")
             label password:
                 input(type='text', name='userpwd')
                 br
-            //- button(type='submit', name='sign-up', value='sign-up') Sign up
-            //- button(type='submit', name='sign-in', value='sign-in') Sign in
-            input(type='submit', name='sign-up', value='Sign up')
-            input(type='submit', name='sign-in', value='Sign in')
+            input(type='submit', name='sign-up', value='Register')
+            input(type='submit', name='sign-in', value='Log in')
             
             
